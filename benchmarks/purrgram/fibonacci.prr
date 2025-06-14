@@ -1,6 +1,8 @@
-def fibonacci(n):
+def fibonacci(n: int) -> int:
     if n <= 1:
         return n
+    end
     return fibonacci(n - 1) + fibonacci(n - 2)
+end
 
-print(f"Fibonacci(35): {fibonacci(35)}")
+print("Fibonacci(35): %d", fibonacci(35))

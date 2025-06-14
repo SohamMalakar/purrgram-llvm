@@ -1,7 +1,12 @@
-def sum_even_numbers():
-    sum_val = 0
-    for i in range(0, 1000000001, 2):
+def sum_even_numbers() -> int:
+    var sum_val: int = 0
+    var i: int = 0
+    while i < 1000000001:
         sum_val += i
-    print(f"Sum of even numbers: {sum_val}")
+        i += 2
+    end
+    print("Sum of even numbers: %d", sum_val)
+    return 0
+end
 
 sum_even_numbers()
