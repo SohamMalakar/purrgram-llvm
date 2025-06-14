@@ -9,7 +9,7 @@ function is_prime(n)
         return false
     end
     
-    for i in 3:2:Int(sqrt(n))
+    for i in 3:2:isqrt(n)
         if n % i == 0
             return false
         end

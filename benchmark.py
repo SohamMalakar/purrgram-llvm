@@ -3,6 +3,7 @@ from collections import defaultdict
 from statistics import mean
 import subprocess
 import time
+import pandas as pd
 
 REPEAT = 10
 BENCHMARKS = "benchmarks"
@@ -15,7 +16,7 @@ LANGS = {
     'julia': '.jl',
     'ruby': '.rb',
     'php': '.php',
-    'purrgram': '.purr'
+    'purrgram': '.prr'
 }
 
 
@@ -28,7 +29,7 @@ def command(lang, src, compiled_path):
         case 'go':
             args = [compiled_path]
         case 'python':
-            args = ['python3', src]
+            args = ['python', src]
         case 'javascript':
             args = ['node', src]
         case 'julia':
@@ -38,7 +39,7 @@ def command(lang, src, compiled_path):
         case 'php':
             args = ['php', src]
         case 'purrgram':
-            args = ['purr', src]
+            args = ['python', 'src/main.py', src]
         case _:
             raise NotImplementedError
 
@@ -73,7 +74,7 @@ def compile(lang, filepath, outpath):
     args = []
     match lang:
         case 'c':
-            args = ["gcc", filepath, "-O3", "-o", outpath]
+            args = ["gcc", filepath, "-O3", "-o", outpath, '-lm']
         case 'go':
             args = ["go", "build", "-o", outpath, filepath]
         case _:
@@ -126,7 +127,9 @@ def main():
             except Exception as e:
                 print(f"Compilation or execution failed for {src}: {e}")
 
-    print(program_results)
+    all_records = [record for records in program_results.values() for record in records]
+    df = pd.DataFrame(all_records)
+    df.to_csv("results.csv", index=False)
 
 
 if __name__ == "__main__":
